@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "globoticket"
+version = "0.1.0"
+description = "Demo project for the Pluralsight course 'Building a REST API with Python 3'"
+authors = ["Reindert-Jan Ekker <info@codesensei.nl>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {extras = ["all"], version = "^0.103.1"}
+sqlalchemy = "^2.0.20"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.1"
+pre-commit = "^3.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

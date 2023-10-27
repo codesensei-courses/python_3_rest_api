@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Globoticket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script>
+        function addevent(event) {
+            console.log(event);
+            $("#catalog-table").append(
+                `<tr>
+                <td class="event-image">
+                  <img src="img/${event.image}" width="100px" />
+                </td>
+                <td class="event-date">${event.date}</td>
+                <td class="event-name">${event.name}</td>
+                <td class="event-artist">${event.artist}</td>
+                <td class="event-price">$${parseFloat(event.price).toFixed(2)}</td>
+                <td class="event-purchase-button"><a href="/details.html?id=${event.id}"><button>Purchase Details</button></a></td>
+                </tr>`);
+
+        }
+
+        $(document).ready(function () {
+
+            $.ajax({
+                url: "/event/",
+                success: data => {
+                    $("#loading").hide();
+                    data.map(event => addevent(event));
+                    $("#catalog-table").show();
+                },
+                error: (_, textStatus, errorThrown) => {
+                    $("#loading p")[0].innerText = `${textStatus}: ${errorThrown}`;
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1><img src="img/globoticket-horizontal-white.svg"></h1>
+        <div class="header-cart">
+            <img src="img/cart.svg"/>
+            <p><span>0</span> tickets</p>
+        </div>
+    </header>
+    <section>
+        <div class="search-bar">
+            <select name="filter-dropdown">
+                <option selected>all</option>
+                <option>other 1</option>
+                <option>other 2</option>
+                <option>other 3</option>
+            </select>
+            <button>Filter</button>
+        </div>
+        <div id="loading">
+            <p>Loading products..</p>
+        </div>
+        <div class="table">
+            <table id="catalog-table" style="display: none">
+                <thead>
+                <tr>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Artist</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+</body>
+</html>

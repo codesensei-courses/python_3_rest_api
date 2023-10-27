@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Globoticket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script>
+        function show_event(event) {
+            $("#details")[0].innerHTML = `
+        <div class="details-left">
+          <img src="img/${event.image}" width="250px" />
+        </div>
+        <div class="details-right">
+          <p class="event-type">Concerts</p>
+          <h2>${event.name}</h2>
+          <h3>${event.artist}</h3>
+          <p class="event-date">${event.date}</p>
+          <p class="event-description">${event.content}</p>
+          <div class="event-price-container">
+            <p class="event-price">$${parseFloat(event.price).toFixed(2)}</p>
+            <p class="event-per-ticket">per ticket</p>
+          </div>
+        </div>`
+
+
+        }
+
+        $(document).ready(function () {
+            const id = new URL(document.location).searchParams.get("id")
+            $.ajax({
+                url: `/event/${id}`,
+                success: data => {
+                    show_event(data);
+                },
+                error: (_, textStatus, errorThrown) => {
+                    $("#detail-text")[0].innerText = `${textStatus}: ${errorThrown}`;
+                }
+            });
+
+        });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1><img src="img/globoticket-horizontal-white.svg"></h1>
+        <div class="header-cart">
+          <img src="img/cart.svg" />
+          <p><span>0</span> tickets</p>
+        </div>
+      </header>
+      <section class="section-details" id="details">
+        <div class="details-left">
+        </div>
+
+        <div class="details-right" id="detail-text">
+          <p>Loading...</p>
+        </div>
+      </section>
+      <section class="section-details divider">
+      </section>
+      <section class="section-details">
+        <div class="details-left">
+        </div>
+        <div class="details-right details-right-purchasing">
+          <p>Quantity</p>
+          <select name="filter-dropdown">
+            <option selected>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+          <div class="event-purchase-button">
+            <a href="basket.html"><button>Place Order</button></a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
