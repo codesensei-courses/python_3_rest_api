@@ -17,6 +17,4 @@ def main():
 
 
 if __name__ == "__main__":
-    print("NOTE: If you cannot connect to the default URL at 0.0.0.0")
-    print("      Try connecting to http://localhost:8000")
     main()
