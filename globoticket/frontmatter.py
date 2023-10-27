@@ -4,6 +4,15 @@ from typing import Any
 
 import yaml
 
+FRONTMATTER_DIRECTORY = Path(__file__).parent.parent / "product_info"
+
+
+def get_frontmatter(product_code: str) -> dict[str, Any]:
+    """Read the frontmatter for event with given product_code,
+    and return the properties as a dict."""
+    frontmatter = find_frontmatter_file(product_code, FRONTMATTER_DIRECTORY).read_text()
+    return parse_frontmatter(frontmatter)
+
 
 def find_frontmatter_file(product_code: str, frontmatter_dir: Path) -> Path:
     """Find a file named `product_code`.yml in frontmatter_dir
@@ -27,7 +36,8 @@ FRONTMATTER_REGEX = re.compile(
     # containing two named groups:
     # one named "yaml" containing the YAML data (first part of the file)
     # one named "content" containing the text content (second part of the file)
-    ""
+    r"---\n(?P<yaml>.*?)---\n(?P<content>.*)",
+    re.DOTALL,
 )
 
 

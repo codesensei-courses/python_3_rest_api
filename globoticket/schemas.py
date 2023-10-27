@@ -9,3 +9,7 @@ class Event(BaseModel):
     # product_code: str
     date: datetime.date
     price: decimal.Decimal
+    artist: str
+    name: str
+    content: str
+    image: str

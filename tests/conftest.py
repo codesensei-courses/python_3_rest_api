@@ -5,6 +5,8 @@ conftest.py
 Fixtures for pytest.
 """
 from datetime import date
+from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 import sqlalchemy
@@ -54,3 +56,13 @@ def client():
     app.dependency_overrides[get_session] = get_test_session
     yield TestClient(app)
     del app.dependency_overrides[get_session]
+
+
+@pytest.fixture(autouse=True, scope="session")
+def test_frontmatter():
+    """Override the location of frontmatter files."""
+    with patch(
+        "globoticket.frontmatter.FRONTMATTER_DIRECTORY",
+        new=Path(__file__).parent / "product_info",
+    ):
+        yield

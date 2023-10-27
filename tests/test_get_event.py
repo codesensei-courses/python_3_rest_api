@@ -29,6 +29,10 @@ def test_client_get_event_1(client):
         "date": "2024-01-01",
         "id": 1,
         "price": "5.5000000000",
+        "artist": "Bob Marley",
+        "content": "Love the life you live. Live the life you love.",
+        "image": "whalers.jpg",
+        "name": "Live at the Rainbow",
     }
 
 
